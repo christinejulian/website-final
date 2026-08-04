@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hardware Store - QUESTLOGS 20+ Items</title>
+  <style>
+    :root {
+      --bg-dark: #0a071b;
+      --card-bg: #140e33;
+      --card-hover: #1c1447;
+      --accent-purple: #8247ff;
+      --accent-pink: #d946ef;
+      --accent-cyan: #06b6d4;
+      --accent-green: #10b981;
+      --accent-yellow: #f59e0b;
+      --text-light: #f3f4f6;
+      --text-muted: #9ca3af;
+      --border-color: #2e2365;
+      --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--font-main); }
+    body { background-color: var(--bg-dark); color: var(--text-light); min-height: 100vh; display: flex; flex-direction: column; }
+    a { color: inherit; text-decoration: none; }
+
+    header { background: rgba(10, 7, 27, 0.95); border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 1000; backdrop-filter: blur(10px); }
+    .top-bar { background: linear-gradient(90deg, var(--accent-purple), var(--accent-pink)); color: #fff; text-align: center; font-size: 0.85rem; padding: 6px 15px; font-weight: 600; letter-spacing: 0.5px; }
+    .nav-container { max-width: 1300px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem; }
+    .logo { font-size: 1.8rem; font-weight: 900; letter-spacing: 2px; color: #fff; display: flex; align-items: center; gap: 8px; }
+    .logo span { color: var(--accent-pink); }
+    nav { display: flex; gap: 1.5rem; align-items: center; }
+    nav a { font-weight: 600; font-size: 0.95rem; color: var(--text-muted); transition: all 0.2s; padding: 6px 12px; border-radius: 6px; }
+    nav a:hover, nav a.active { color: #fff; background: var(--border-color); }
+    .nav-actions { display: flex; align-items: center; gap: 1rem; }
+    .cart-btn { position: relative; background: var(--card-bg); border: 1px solid var(--border-color); padding: 8px 16px; border-radius: 20px; color: #fff; cursor: pointer; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+    .cart-badge { background: var(--accent-pink); color: white; font-size: 0.75rem; padding: 2px 7px; border-radius: 10px; font-weight: 800; }
+
+    footer { background: #05030f; border-top: 1px solid var(--border-color); margin-top: auto; padding: 3rem 2rem 1.5rem 2rem; }
+    .footer-grid { max-width: 1300px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2.5rem; margin-bottom: 2.5rem; }
+    .footer-col h4 { color: #fff; font-size: 1.1rem; margin-bottom: 1.2rem; text-transform: uppercase; letter-spacing: 1px; border-left: 3px solid var(--accent-purple); padding-left: 8px; }
+    .footer-col p, .footer-col li { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.6rem; line-height: 1.6; list-style: none; }
+    .footer-col a:hover { color: var(--accent-pink); }
+    .footer-bottom { max-width: 1300px; margin: 0 auto; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 1.5rem; text-align: center; color: var(--text-muted); font-size: 0.85rem; }
+
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink)); color: white; padding: 10px 20px; border-radius: 8px; font-weight: 700; border: none; cursor: pointer; transition: all 0.3s; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 0.5px; }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(130, 71, 255, 0.4); }
+    .btn-outline { background: transparent; border: 1px solid var(--accent-purple); color: #fff; }
+    .btn-outline:hover { background: var(--accent-purple); }
+
+    .container { max-width: 1300px; margin: 0 auto; padding: 3rem 2rem; width: 100%; }
+    .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.8rem; }
+    .product-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; transition: all 0.3s; }
+    .product-card:hover { border-color: var(--accent-purple); transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.4); }
+    .product-img { width: 100%; height: 200px; object-fit: cover; background: #000; }
+    .product-info { padding: 1.2rem; display: flex; flex-direction: column; flex-grow: 1; }
+    .product-category { color: var(--accent-cyan); font-size: 0.75rem; text-transform: uppercase; font-weight: 700; margin-bottom: 0.4rem; }
+    .product-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; line-height: 1.3; }
+    .product-price { font-size: 1.3rem; font-weight: 800; color: var(--accent-pink); margin-bottom: 1rem; }
+    .product-actions { margin-top: auto; display: flex; gap: 8px; }
+
+    .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); display: none; justify-content: center; align-items: center; z-index: 2000; backdrop-filter: blur(5px); }
+    .modal-overlay.active { display: flex; }
+    .modal-box { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; width: 90%; max-width: 600px; max-height: 90vh; overflow-y: auto; padding: 2rem; position: relative; }
+    .close-modal { position: absolute; top: 1rem; right: 1.5rem; font-size: 1.8rem; cursor: pointer; color: var(--text-muted); }
+
+    .cart-drawer { position: fixed; top: 0; right: -420px; width: 400px; height: 100%; background: var(--card-bg); border-left: 1px solid var(--border-color); z-index: 2500; transition: right 0.3s ease; display: flex; flex-direction: column; padding: 1.5rem; }
+    .cart-drawer.active { right: 0; }
+    .cart-items { flex-grow: 1; overflow-y: auto; margin: 1.5rem 0; }
+    .cart-item { display: flex; gap: 1rem; padding: 1rem 0; border-bottom: 1px solid var(--border-color); align-items: center; }
+    .cart-item img { width: 60px; height: 60px; object-fit: cover; border-radius: 8px; }
+  </style>
+</head>
+<body>
+
+  <div class="top-bar">🔥 MEGA SALE: Get 20% off all QuestLogs Pro Gear! Code: FASTFLATION20</div>
+  <header>
+    <div class="nav-container">
+      <a href="index.html" class="logo">QUEST<span>LOGS</span></a>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="shop.html" class="active">Equipment Shop</a>
+        <a href="games.html">Satire Games</a>
+        <a href="blog.html">Articles & News</a>
+        <a href="about.html">About Us</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+      <div class="nav-actions">
+        <a href="login.html" class="btn btn-outline" style="padding: 6px 14px; font-size: 0.8rem;">Login / Register</a>
+        <button class="cart-btn" onclick="toggleCart()">🛒 Cart <span class="cart-badge" id="cart-count">0</span></button>
+      </div>
+    </div>
+  </header>
+
+  <div style="background: var(--card-bg); border-bottom: 1px solid var(--border-color); padding: 3rem 2rem;">
+    <div style="max-width: 1300px; margin: 0 auto;">
+      <h1 style="font-size: 2.8rem; font-weight: 900; text-transform: uppercase;">Gaming Equipment Store</h1>
+      <p style="color: var(--text-muted); font-size: 1.1rem; margin-top: 0.5rem;">Browse 20 premium hardware items designed for high performance esports and immersive setups.</p>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="product-grid" id="shop-grid">
+      <!-- 20 Product Cards dynamically rendered via JavaScript below -->
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>QUESTLOGS HQ</h4>
+        <p>Your ultimate destination for high-end video game hardware, gaming news, and satirical strategy simulators exposing corporate fast-food greed.</p>
+        <p style="margin-top: 1rem; font-weight: 700; color: #fff;">📍 123 Quest Way, Suite 100<br>Austin, TX 78701</p>
+        <p>📞 (512) 555-0199</p>
+        <p>✉️ support@questlogs.com</p>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Navigation</h4>
+        <ul>
+          <li><a href="index.html">Home Center</a></li>
+          <li><a href="shop.html">Hardware Store (20+ Items)</a></li>
+          <li><a href="games.html">Satirical Arcade Games</a></li>
+          <li><a href="mcdonalds-game.html">McD Fast-Flation Simulator</a></li>
+          <li><a href="starbucks-game.html">Starbucks Brew Tycoon</a></li>
+          <li><a href="blog.html">News & Industry Articles</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Satirical Game Hub</h4>
+        <ul>
+          <li><a href="mcdonalds-game.html">McDonald's Meat Supply Sim</a></li>
+          <li><a href="starbucks-game.html">Starbucks Shrinkflation War</a></li>
+          <li><a href="dunkin-game.html">Dunkin' Donut Markup Mayhem</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Newsletter Signup</h4>
+        <p>Get alerted when fast food prices go up again or when new gaming hardware drops!</p>
+        <form onsubmit="alert('Subscribed to QuestLogs Updates!'); return false;" style="margin-top: 0.8rem;">
+          <input type="email" placeholder="Enter your email..." required style="width:100%; padding: 10px; border-radius: 6px; border: 1px solid var(--border-color); background: #000; color: #fff; margin-bottom: 8px;">
+          <button class="btn" style="width: 100%;">Subscribe</button>
+        </form>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 QuestLogs Media & Gaming Equipment Inc. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <div class="cart-drawer" id="cartDrawer">
+    <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border-color); padding-bottom: 1rem;">
+      <h3>Your Shopping Cart</h3>
+      <span style="cursor:pointer; font-size:1.5rem;" onclick="toggleCart()">&times;</span>
+    </div>
+    <div class="cart-items" id="cartItemsList">
+      <p style="text-align:center; color: var(--text-muted); margin-top:2rem;">Your cart is currently empty.</p>
+    </div>
+    <div style="border-top: 1px solid var(--border-color); padding-top: 1rem;">
+      <div style="display:flex; justify-content:space-between; font-size: 1.2rem; font-weight:800; margin-bottom:1rem;">
+        <span>Total:</span>
+        <span id="cartTotalCost">$0.00</span>
+      </div>
+      <button class="btn" style="width:100%;" onclick="checkoutCart()">Proceed to Checkout</button>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="productModal">
+    <div class="modal-box">
+      <span class="close-modal" onclick="closeProductModal()">&times;</span>
+      <div id="modalContent"></div>
+    </div>
+  </div>
+
+  <script>
+    const products = [
+      { id: "p1", title: "AeroRGB Mechanical Gaming Keyboard", price: 149.99, category: "Keyboards", img: "https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=600&auto=format&fit=crop", desc: "Ultra-fast optical switches with customizable per-key RGB lighting and aircraft-grade aluminum top plate.", specs: "Switches: Optical Red | Actuation: 1.0mm | Polling Rate: 8000Hz" },
+      { id: "p2", title: "Apex Titan Wireless Controller", price: 79.99, category: "Controllers", img: "https://images.unsplash.com/photo-1600080972464-8e5f35f63d08?w=600&auto=format&fit=crop", desc: "Pro ergonomic controller with Hall-effect anti-drift joysticks and customizable back buttons.", specs: "Battery: 40 hrs | Latency: 1ms Ultra-Low | Hall-Effect Sensors" },
+      { id: "p3", title: "Vortex 34\" Ultrawide Curved Monitor", price: 549.99, category: "Monitors", img: "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=600&auto=format&fit=crop", desc: "Immersive 1000R curvature display with 240Hz refresh rate and 0.5ms response time.", specs: "Resolution: 3440x1440 WQHD | Panel: QD-OLED | Refresh: 240Hz" },
+      { id: "p4", title: "Pulse7 Surround Sound Headset", price: 129.99, category: "Audio", img: "https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=600&auto=format&fit=crop", desc: "Lossless 7.1 spatial surround sound headset with detachable noise-canceling broadcast microphone.", specs: "Drivers: 50mm Neodymium | Weight: 260g | Memory Foam Cups" },
+      { id: "p5", title: "CyberBattlestation RGB Desk", price: 399.99, category: "Furniture", img: "https://images.unsplash.com/photo-1598550476439-6847785fcea6?w=600&auto=format&fit=crop", desc: "Motorized height-adjustable standing gaming desk with built-in full-surface deskpad.", specs: "Height Range: 28\" - 48\" | Load Cap: 300 lbs | Dual Motors" },
+      { id: "p6", title: "Phantom Ultra Lightweight Mouse", price: 69.99, category: "Mice", img: "https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=600&auto=format&fit=crop", desc: "Featherweight 49g honeycomb gaming mouse equipped with 26,000 DPI optical tracking sensor.", specs: "Weight: 49g | Sensor: Heroic Track 26k | PTFE Feet" },
+      { id: "p7", title: "ErgoThrone Pro Gaming Chair", price: 329.99, category: "Furniture", img: "https://images.unsplash.com/photo-1580481072645-022f9a6d83d0?w=600&auto=format&fit=crop", desc: "Breathable cold-cure foam gaming chair with 4D armrests and magnetic lumbar pillow.", specs: "Recline: 165 Degrees | Steel Frame | PU Leather" },
+      { id: "p8", title: "HyperStream Studio Mic & Arm", price: 159.99, category: "Audio", img: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=600&auto=format&fit=crop", desc: "Cardioid condenser microphone with built-in shock mount, pop filter, and heavy-duty boom arm.", specs: "Sample Rate: 192kHz/24bit | Touch Mute Button | Dual Pattern" },
+      { id: "p9", title: "StreamDeck Commander 15-Key", price: 139.99, category: "Streaming", img: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&auto=format&fit=crop", desc: "Fully customizable LCD keys to control your live streams and switch scenes effortlessly.", specs: "Keys: 15 Interactive LCDs | App Integration: OBS, Twitch" },
+      { id: "p10", title: "TitanRig RTX 4090 Custom Rig", price: 3499.99, category: "PC Systems", img: "https://images.unsplash.com/photo-1587202372775-e229f172b9d7?w=600&auto=format&fit=crop", desc: "Ultimate high-performance prebuilt gaming PC featuring liquid cooling.", specs: "GPU: RTX 4090 24GB | CPU: i9-14900K | RAM: 64GB DDR5" },
+      { id: "p11", title: "NeoVR Pro Motion Headset", price: 699.99, category: "VR Gear", img: "https://images.unsplash.com/photo-1622979135225-d2ba269bc1bd?w=600&auto=format&fit=crop", desc: "Next-gen standalone Virtual Reality VR headset with eye-tracking technology.", specs: "Resolution: 4K Per Eye | Field of View: 120 Deg | Refresh: 140Hz" },
+      { id: "p12", title: "ChromaGlide XXL Desk Pad", price: 34.99, category: "Accessories", img: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&auto=format&fit=crop", desc: "Micro-woven cloth surface desk pad with edge-to-edge customizable RGB light strip.", specs: "Dimensions: 900mm x 400mm x 4mm | Water-Resistant Coating" },
+      { id: "p13", title: "Overclocked 4K 60FPS Capture Card", price: 179.99, category: "Streaming", img: "https://images.unsplash.com/photo-1563770660941-20978e870e26?w=600&auto=format&fit=crop", desc: "Pass-through 4K HDR gaming capture card with zero latency for streaming.", specs: "Max Capture: 4K60 / 1080p240 | Interface: PCIe Gen3 x4" },
+      { id: "p14", title: "Acoustic Shield Wall Panels (8-Pack)", price: 89.99, category: "Accessories", img: "https://images.unsplash.com/photo-1595776613215-fe04b78de7d0?w=600&auto=format&fit=crop", desc: "High-density soundproofing foam panels with geometric LED edge highlights.", specs: "Density: 35kg/m3 | NRC Rating: 0.90 | Self-Adhesive Backing" },
+      { id: "p15", title: "ForceFeedback Racing Wheel Set", price: 449.99, category: "Sim Gear", img: "https://images.unsplash.com/photo-1547394765-185e1e68f34e?w=600&auto=format&fit=crop", desc: "Dual-motor force feedback racing wheel with 3-pedal set and manual leather shifter stick.", specs: "Rotation: 900 Degrees | Metal Pedals | Helical Gearing" },
+      { id: "p16", title: "FlightStick Pro Joystick Controls", price: 199.99, category: "Sim Gear", img: "https://images.unsplash.com/photo-1511512578047-dfb367046420?w=600&auto=format&fit=crop", desc: "Precision dual-throttle HOTAS flight system designed for flight simulators.", specs: "Buttons: 32 Programmable | 16-bit Magnetic Sensors" },
+      { id: "p17", title: "Command Center Dual Monitor Arm", price: 119.99, category: "Furniture", img: "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=600&auto=format&fit=crop", desc: "Gas spring dual monitor desk mount supporting screens up to 32 inches.", specs: "Weight Cap: 19.8 lbs per arm | VESA 75/100 | Cable Routing" },
+      { id: "p18", title: "RGB Gaming Router WiFi 7", price: 299.99, category: "Networking", img: "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=600&auto=format&fit=crop", desc: "Quad-band WiFi 7 router prioritizing game traffic to minimize ping.", specs: "Speed: Up to 19 Gbps | 10G Gaming Port | Quad-Core 2.6GHz CPU" },
+      { id: "p19", title: "Tactical Mechanical Keycap Set", price: 29.99, category: "Accessories", img: "https://images.unsplash.com/photo-1618384887929-16ec33fab9ef?w=600&auto=format&fit=crop", desc: "Custom double-shot PBT keycaps with translucent shine-through lettering.", specs: "Material: Thick PBT | Profile: OEM | Fits Standard ANSI 104" },
+      { id: "p20", title: "ProGamer Blue Light Glasses", price: 39.99, category: "Accessories", img: "https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=600&auto=format&fit=crop", desc: "Anti-glare gaming eyewear blocking 90% of harmful blue light.", specs: "Lens: Amber Tinted Polycarbonate | Frame: Magnesium Alloy" }
+    ];
+
+    const grid = document.getElementById('shop-grid');
+    products.forEach(p => {
+      grid.innerHTML += `
+        <div class="product-card">
+          <img src="${p.img}" alt="${p.title}" class="product-img">
+          <div class="product-info">
+            <span class="product-category">${p.category}</span>
+            <h3 class="product-title">${p.title}</h3>
+            <div class="product-price">$${p.price.toFixed(2)}</div>
+            <div class="product-actions">
+              <button class="btn btn-outline" style="flex:1;" onclick="viewProductDetails('${p.id}', '${p.title}', ${p.price}, '${p.img}', '${p.category}', '${p.desc}', '${p.specs}')">Details</button>
+              <button class="btn" style="flex:1;" onclick="addToCart('${p.id}', '${p.title}', ${p.price}, '${p.img}')">Add Cart</button>
+            </div>
+          </div>
+        </div>`;
+    });
+
+    let cart = [];
+    function toggleCart() { document.getElementById('cartDrawer').classList.toggle('active'); }
+    function addToCart(id, title, price, img) {
+      const existing = cart.find(item => item.id === id);
+      if (existing) { existing.qty += 1; } else { cart.push({ id, title, price, img, qty: 1 }); }
+      updateCartUI();
+      toggleCart();
+    }
+    function updateCartUI() {
+      const count = cart.reduce((acc, item) => acc + item.qty, 0);
+      document.getElementById('cart-count').innerText = count;
+      const list = document.getElementById('cartItemsList');
+      if (cart.length === 0) {
+        list.innerHTML = '<p style="text-align:center; color: var(--text-muted); margin-top:2rem;">Your cart is currently empty.</p>';
+        document.getElementById('cartTotalCost').innerText = '$0.00';
+        return;
+      }
+      let html = '';
+      let total = 0;
+      cart.forEach(item => {
+        total += item.price * item.qty;
+        html += `
+          <div class="cart-item">
+            <img src="${item.img}" alt="${item.title}">
+            <div style="flex-grow:1;">
+              <h5 style="color:#fff; font-size:0.9rem;">${item.title}</h5>
+              <p style="color:var(--accent-pink); font-weight:bold;">$${item.price.toFixed(2)} x ${item.qty}</p>
+            </div>
+            <button onclick="removeFromCart('${item.id}')" style="background:none; border:none; color:red; cursor:pointer;">❌</button>
+          </div>`;
+      });
+      list.innerHTML = html;
+      document.getElementById('cartTotalCost').innerText = '$' + total.toFixed(2);
+    }
+    function removeFromCart(id) { cart = cart.filter(item => item.id !== id); updateCartUI(); }
+    function checkoutCart() {
+      if(cart.length === 0) { alert('Your cart is empty!'); return; }
+      alert('Thank you for your order! Processing payment through QuestLogs Secured Gateway...');
+      cart = []; updateCartUI(); toggleCart();
+    }
+    function viewProductDetails(id, title, price, img, category, desc, specs) {
+      const modal = document.getElementById('productModal');
+      const content = document.getElementById('modalContent');
+      content.innerHTML = `
+        <img src="${img}" style="width:100%; height:250px; object-fit:cover; border-radius:12px; margin-bottom:1rem;">
+        <span style="color:var(--accent-cyan); font-weight:bold; text-transform:uppercase; font-size:0.8rem;">${category}</span>
+        <h2 style="color:#fff; margin:0.5rem 0;">${title}</h2>
+        <h3 style="color:var(--accent-pink); font-size:1.8rem; margin-bottom:1rem;">$${price.toFixed(2)}</h3>
+        <p style="color:var(--text-muted); line-height:1.6; margin-bottom:1.5rem;">${desc}</p>
+        <div style="background:rgba(255,255,255,0.05); padding:1rem; border-radius:8px; margin-bottom:1.5rem;">
+          <h4 style="color:#fff; margin-bottom:0.5rem;">Tech Specs:</h4>
+          <p style="color:var(--text-light); font-size:0.9rem; line-height:1.5;">${specs}</p>
+        </div>
+        <button class="btn" style="width:100%;" onclick="addToCart('${id}', '${title}', ${price}, '${img}'); closeProductModal();">Add to Cart</button>`;
+      modal.classList.add('active');
+    }
+    function closeProductModal() { document.getElementById('productModal').classList.remove('active'); }
+  </script>
+</body>
+</html>
