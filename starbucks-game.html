@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Starbucks Cup Shrinker 3000 Satire Game - QUESTLOGS</title>
+  <style>
+    :root {
+      --bg-dark: #0a071b;
+      --card-bg: #140e33;
+      --accent-purple: #8247ff;
+      --accent-pink: #d946ef;
+      --accent-green: #10b981;
+      --text-light: #f3f4f6;
+      --text-muted: #9ca3af;
+      --border-color: #2e2365;
+      --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--font-main); }
+    body { background-color: var(--bg-dark); color: var(--text-light); min-height: 100vh; display: flex; flex-direction: column; }
+    a { color: inherit; text-decoration: none; }
+
+    header { background: rgba(10, 7, 27, 0.95); border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 1000; }
+    .top-bar { background: linear-gradient(90deg, var(--accent-purple), var(--accent-pink)); color: #fff; text-align: center; font-size: 0.85rem; padding: 6px 15px; font-weight: 600; }
+    .nav-container { max-width: 1300px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem; }
+    .logo { font-size: 1.8rem; font-weight: 900; color: #fff; display: flex; gap: 8px; }
+    .logo span { color: var(--accent-pink); }
+    nav { display: flex; gap: 1.5rem; align-items: center; }
+    nav a { font-weight: 600; font-size: 0.95rem; color: var(--text-muted); padding: 6px 12px; border-radius: 6px; }
+    nav a:hover, nav a.active { color: #fff; background: var(--border-color); }
+
+    footer { background: #05030f; border-top: 1px solid var(--border-color); margin-top: auto; padding: 3rem 2rem 1.5rem 2rem; }
+    .footer-grid { max-width: 1300px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2.5rem; }
+    .footer-col h4 { color: #fff; font-size: 1.1rem; margin-bottom: 1.2rem; border-left: 3px solid var(--accent-purple); padding-left: 8px; }
+    .footer-col p, .footer-col li { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.6rem; list-style: none; }
+    .footer-bottom { max-width: 1300px; margin: 0 auto; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 1.5rem; text-align: center; color: var(--text-muted); font-size: 0.85rem; }
+
+    .btn { display: inline-flex; align-items: center; justify-content: center; background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink)); color: white; padding: 10px 20px; border-radius: 8px; font-weight: 700; border: none; cursor: pointer; text-transform: uppercase; font-size: 0.85rem; }
+    .container { max-width: 1300px; margin: 0 auto; padding: 3rem 2rem; width: 100%; }
+  </style>
+</head>
+<body>
+
+  <div class="top-bar">🔥 MEGA SALE: Get 20% off all QuestLogs Pro Gear! Code: FASTFLATION20</div>
+  <header>
+    <div class="nav-container">
+      <a href="index.html" class="logo">QUEST<span>LOGS</span></a>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="shop.html">Equipment Shop</a>
+        <a href="games.html" class="active">Satire Games</a>
+        <a href="blog.html">Articles & News</a>
+        <a href="about.html">About Us</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <div style="background: #064e3b; padding: 3rem 2rem; text-align: center; border-bottom: 1px solid var(--border-color);">
+    <h1 style="font-size: 2.8rem; font-weight: 900; color: #fff;">STARBUCKS CUP SHRINKER 3000</h1>
+    <p style="color: var(--text-muted); font-size: 1.1rem; margin-top: 0.5rem;">Corporate Coffee & Pastry Price Gouging Simulator</p>
+  </div>
+
+  <div class="container" style="max-width: 900px;">
+    <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; padding: 2rem;">
+      <div style="display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.4); padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem;">
+        <div><span style="color: var(--text-muted); font-size: 0.8rem;">CAPITAL</span><h2 style="color: var(--accent-green); font-size: 2rem;" id="game-cash">$25,000.00</h2></div>
+        <div><span style="color: var(--text-muted); font-size: 0.8rem;">LATTE PRICE</span><h2 style="color: #10b981; font-size: 2rem;" id="game-item-price">$7.50</h2></div>
+        <div><span style="color: var(--text-muted); font-size: 0.8rem;">PUBLIC ANGER</span><h2 style="color: #ef4444; font-size: 2rem;" id="game-anger">10%</h2></div>
+      </div>
+
+      <h3 style="margin-bottom: 1rem; color: #fff;">EXECUTIVE ACTION CONSOLE</h3>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem;">
+        <button class="btn" style="background: #10b981;" onclick="hikePrice()">Hike Latte Price (+$1.50)</button>
+        <button class="btn" style="background: var(--accent-pink);" onclick="shrinkCup()">Shrink Cup Size (-20%)</button>
+        <button class="btn" style="background: #f59e0b; color:#000;" onclick="chargeExtraMilk()">Charge $1.25 Extra Oat Milk</button>
+        <button class="btn" style="background: transparent; border: 1px solid var(--accent-purple);" onclick="payPR()">PR Greenwashing ($3,000)</button>
+      </div>
+
+      <h3 style="margin-bottom: 0.8rem; color: #fff;">Corporate Action Log</h3>
+      <div id="game-log" style="background: #000; border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem; height: 250px; overflow-y: auto; font-family: monospace; font-size: 0.85rem;">
+        <div style="color: #10b981;">[SYSTEM] Starbucks Cup Shrinker 3000 running. Maximize corporate profit.</div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>QUESTLOGS HQ</h4>
+        <p>123 Quest Way, Suite 100, Austin, TX 78701<br>Phone: (512) 555-0199</p>
+      </div>
+      <div class="footer-col">
+        <h4>Satirical Game Hub</h4>
+        <ul>
+          <li><a href="mcdonalds-game.html">McDonald's Supply Sim</a></li>
+          <li><a href="starbucks-game.html">Starbucks Shrinkflation War</a></li>
+          <li><a href="dunkin-game.html">Dunkin' Donut Markup Mayhem</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom"><p>&copy; 2026 QuestLogs Media Inc.</p></div>
+  </footer>
+
+  <script>
+    let cash = 25000, price = 7.50, anger = 10;
+    function update() {
+      document.getElementById('game-cash').innerText = '$' + cash.toLocaleString('en-US', {minimumFractionDigits: 2});
+      document.getElementById('game-item-price').innerText = '$' + price.toFixed(2);
+      document.getElementById('game-anger').innerText = Math.round(anger) + '%';
+    }
+    function addLog(msg, color="#fff") {
+      const log = document.getElementById('game-log');
+      const div = document.createElement('div');
+      div.style.color = color; div.style.marginBottom = '6px';
+      div.innerText = '[' + new Date().toLocaleTimeString() + '] ' + msg;
+      log.prepend(div);
+    }
+    function hikePrice() { price += 1.50; cash += 4500; anger += 7; addLog('Increased latte price to $' + price.toFixed(2), '#10b981'); update(); }
+    function shrinkCup() { cash += 3000; anger += 5; addLog('Shrinkflation activated! Decreased cup volume 20%.', '#f59e0b'); update(); }
+    function chargeExtraMilk() { price += 1.25; cash += 2200; anger += 4; addLog('Added oat milk surcharge!', '#d946ef'); update(); }
+    function payPR() { if(cash>=3000){ cash-=3000; anger=Math.max(0, anger-15); addLog('Ran greenwashing campaign.', '#10b981'); update();} }
+    setInterval(() => {
+      cash += price * 120; anger += 0.4;
+      if (anger >= 100) { alert('BOYCOTT ALERT! Customer outrage forced executive resignation!'); cash=25000; price=7.50; anger=10; }
+      update();
+    }, 2500);
+    update();
+  </script>
+</body>
+</html>
